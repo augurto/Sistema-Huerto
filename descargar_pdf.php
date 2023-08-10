@@ -32,19 +32,6 @@ if (isset($_POST['tablaData'])) {
   $dompdf->loadHtml($html);
   $dompdf->setPaper('A4', 'portrait');
   $dompdf->render();
-
-  // En lugar de stream(), guardamos el PDF en el servidor
-  $pdfOutput = $dompdf->output();
-  $pdfFilename = 'tabla.pdf';
-  file_put_contents($pdfFilename, $pdfOutput);
-
-  // Descargamos el PDF al navegador
-  header('Content-Description: File Transfer');
-  header('Content-Type: application/octet-stream');
-  header('Content-Disposition: attachment; filename="' . $pdfFilename . '"');
-  readfile($pdfFilename);
-
-  // Eliminamos el archivo temporal
-  unlink($pdfFilename);
+  $dompdf->stream("tabla.pdf", array("Attachment" => false));
 }
 ?>

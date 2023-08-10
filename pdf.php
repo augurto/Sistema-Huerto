@@ -7,7 +7,7 @@
   <title>Calculadora de Precios</title>
 </head>
 <body>
-  <div class="container mt-5"> 
+  <div class="container mt-5">
     <h2>Calculadora de Precios</h2>
     
     <div class="mb-3">
@@ -23,7 +23,8 @@
       <input type="number" class="form-control" id="precio">
     </div>
     <button class="btn btn-primary" onclick="agregarFila()">Agregar</button>
-
+    <button class="btn btn-success" onclick="descargarPDF()">Descargar PDF</button>
+   
     <table class="table table-bordered mt-4">
       <thead>
         <tr>
@@ -31,6 +32,7 @@
           <th>Unidades</th>
           <th>Precio por Unidad</th>
           <th>Total</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="tablaBody">
@@ -40,14 +42,17 @@
         <tr>
           <td colspan="3" class="text-right">Subtotal</td>
           <td><span id="subtotal">0</span></td>
+          <td></td>
         </tr>
         <tr>
           <td colspan="3" class="text-right">IGV (18%)</td>
           <td><span id="igv">0</span></td>
+          <td></td>
         </tr>
         <tr>
           <td colspan="3" class="text-right">Total</td>
           <td><span id="total">0</span></td>
+          <td></td>
         </tr>
       </tfoot>
     </table>
@@ -69,12 +74,26 @@
           <td>${unidades}</td>
           <td>${precio.toFixed(2)}</td>
           <td>${total.toFixed(2)}</td>
+          <td><button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
         </tr>
       `;
 
       document.getElementById("tablaBody").innerHTML += fila;
 
       calcularTotales();
+      limpiarInputs();
+    }
+
+    function eliminarFila(button) {
+      var fila = button.parentNode.parentNode;
+      fila.parentNode.removeChild(fila);
+      calcularTotales();
+    }
+
+    function limpiarInputs() {
+      document.getElementById("descripcion").value = "";
+      document.getElementById("unidades").value = "";
+      document.getElementById("precio").value = "";
     }
 
     function calcularTotales() {
@@ -91,6 +110,33 @@
       document.getElementById("subtotal").textContent = subtotal.toFixed(2);
       document.getElementById("igv").textContent = igv.toFixed(2);
       document.getElementById("total").textContent = total.toFixed(2);
+    }
+    
+    function descargarPDF() {
+      var filas = document.querySelectorAll("#tablaBody tr");
+      var tablaData = [];
+
+      filas.forEach(function(fila) {
+        var descripcion = fila.querySelector("td:nth-child(1)").textContent;
+        var unidades = parseInt(fila.querySelector("td:nth-child(2)").textContent);
+        var precio = parseFloat(fila.querySelector("td:nth-child(3)").textContent);
+        var total = parseFloat(fila.querySelector("td:nth-child(4)").textContent);
+
+        tablaData.push({ descripcion, unidades, precio, total });
+      });
+
+      $.ajax({
+        type: "POST",
+        url: "descargar_pdf.php",
+        data: { tablaData: JSON.stringify(tablaData) },
+        success: function(response) {
+          // Redirigir a la página de descarga del PDF
+          window.location.href = 'descargar_pdf.php';
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
     }
   </script>
 </body>
