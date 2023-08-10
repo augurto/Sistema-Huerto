@@ -58,62 +58,66 @@
       </tfoot>
     </table>
   </div>
+  
+  <form id="imprimirForm" method="post" action="imprimir.php" target="_blank" style="display: none;">
+    <input type="hidden" id="tablaDataInput" name="tablaData">
+  </form>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    function agregarFila() {
-      var descripcion = document.getElementById("descripcion").value;
-      var unidades = parseInt(document.getElementById("unidades").value);
-      var precio = parseFloat(document.getElementById("precio").value);
-      var total = unidades * precio;
+  function agregarFila() {
+    var descripcion = document.getElementById("descripcion").value;
+    var unidades = parseInt(document.getElementById("unidades").value);
+    var precio = parseFloat(document.getElementById("precio").value);
+    var total = unidades * precio;
 
-      var fila = `
-        <tr>
-          <td>${descripcion}</td>
-          <td>${unidades}</td>
-          <td>${precio.toFixed(2)}</td>
-          <td>${total.toFixed(2)}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
-        </tr>
-      `;
+    var fila = `
+      <tr>
+        <td>${descripcion}</td>
+        <td>${unidades}</td>
+        <td>${precio.toFixed(2)}</td>
+        <td>${total.toFixed(2)}</td>
+        <td><button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
+      </tr>
+    `;
 
-      document.getElementById("tablaBody").innerHTML += fila;
+    document.getElementById("tablaBody").innerHTML += fila;
 
-      calcularTotales();
-      limpiarInputs();
-    }
+    calcularTotales();
+    limpiarInputs();
+  }
 
-    function eliminarFila(button) {
-      var fila = button.parentNode.parentNode;
-      fila.parentNode.removeChild(fila);
-      calcularTotales();
-    }
+  function eliminarFila(button) {
+    var fila = button.parentNode.parentNode;
+    fila.parentNode.removeChild(fila);
+    calcularTotales();
+  }
 
-    function limpiarInputs() {
-      document.getElementById("descripcion").value = "";
-      document.getElementById("unidades").value = "";
-      document.getElementById("precio").value = "";
-    }
+  function limpiarInputs() {
+    document.getElementById("descripcion").value = "";
+    document.getElementById("unidades").value = "";
+    document.getElementById("precio").value = "";
+  }
 
-    function calcularTotales() {
-      var filas = document.querySelectorAll("#tablaBody tr");
-      var subtotal = 0;
+  function calcularTotales() {
+    var filas = document.querySelectorAll("#tablaBody tr");
+    var subtotal = 0;
 
-      filas.forEach(function(fila) {
-        subtotal += parseFloat(fila.querySelector("td:nth-child(4)").textContent);
-      });
+    filas.forEach(function(fila) {
+      subtotal += parseFloat(fila.querySelector("td:nth-child(4)").textContent);
+    });
 
-      var igv = subtotal * 0.18;
-      var total = subtotal + igv;
+    var igv = subtotal * 0.18;
+    var total = subtotal + igv;
 
-      document.getElementById("subtotal").textContent = subtotal.toFixed(2);
-      document.getElementById("igv").textContent = igv.toFixed(2);
-      document.getElementById("total").textContent = total.toFixed(2);
-    }
+    document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+    document.getElementById("igv").textContent = igv.toFixed(2);
+    document.getElementById("total").textContent = total.toFixed(2);
+  }
 
-    function imprimirTabla() {
+  function imprimirTabla() {
     // Obtener las filas de la tabla
     var filas = document.querySelectorAll("#tablaBody tr");
     
@@ -143,6 +147,7 @@
       }
     });
   }
-  </script>
+</script>
+
 </body>
 </html>
