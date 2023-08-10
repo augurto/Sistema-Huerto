@@ -135,13 +135,13 @@
 
     // Enviar los datos por AJAX a imprimir.php
     $.ajax({
-      type: "POST",
-      url: "imprimir.php",
-      data: { tablaData: JSON.stringify(tablaData) },
-      success: function(response) {
-        console.log(response);
-        // Aquí podrías mostrar una notificación o redireccionar
-      },
+    type: "POST",
+    url: "descargar_pdf.php",
+    data: { tablaData: JSON.stringify(tablaData) },
+    success: function(response) {
+      // Redirigir a la página de descarga del PDF
+      window.location.href = 'descargar_pdf.php';
+    },
       error: function(error) {
         console.error(error);
       }
