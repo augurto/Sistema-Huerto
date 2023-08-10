@@ -9,7 +9,22 @@
 <body>
   <div class="container mt-5">
     <h2>Calculadora de Precios</h2>
-    <table class="table table-bordered">
+    
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <input type="text" class="form-control" id="descripcion">
+    </div>
+    <div class="mb-3">
+      <label for="unidades" class="form-label">Unidades</label>
+      <input type="number" class="form-control" id="unidades">
+    </div>
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio por Unidad</label>
+      <input type="number" class="form-control" id="precio">
+    </div>
+    <button class="btn btn-primary" onclick="agregarFila()">Agregar</button>
+
+    <table class="table table-bordered mt-4">
       <thead>
         <tr>
           <th>Descripción</th>
@@ -18,20 +33,10 @@
           <th>Total</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td><input type="text" class="form-control" id="descripcion1"></td>
-          <td><input type="number" class="form-control" id="unidades1" onchange="calcularTotal(1)"></td>
-          <td><input type="number" class="form-control" id="precio1" onchange="calcularTotal(1)"></td>
-          <td><span id="total1">0</span></td>
-        </tr>
-        <tr>
-          <td><input type="text" class="form-control" id="descripcion2"></td>
-          <td><input type="number" class="form-control" id="unidades2" onchange="calcularTotal(2)"></td>
-          <td><input type="number" class="form-control" id="precio2" onchange="calcularTotal(2)"></td>
-          <td><span id="total2">0</span></td>
-        </tr>
-        <!-- Agregar más filas si es necesario -->
+      <tbody id="tablaBody">
+        <!-- Las filas se agregarán aquí mediante JavaScript -->
+      </tbody>
+      <tfoot>
         <tr>
           <td colspan="3" class="text-right">Subtotal</td>
           <td><span id="subtotal">0</span></td>
@@ -44,7 +49,7 @@
           <td colspan="3" class="text-right">Total</td>
           <td><span id="total">0</span></td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   </div>
 
@@ -52,21 +57,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    function calcularTotal(row) {
-      var unidades = parseInt(document.getElementById("unidades" + row).value);
-      var precio = parseFloat(document.getElementById("precio" + row).value);
+    function agregarFila() {
+      var descripcion = document.getElementById("descripcion").value;
+      var unidades = parseInt(document.getElementById("unidades").value);
+      var precio = parseFloat(document.getElementById("precio").value);
       var total = unidades * precio;
 
-      document.getElementById("total" + row).textContent = total.toFixed(2);
+      var fila = `
+        <tr>
+          <td>${descripcion}</td>
+          <td>${unidades}</td>
+          <td>${precio.toFixed(2)}</td>
+          <td>${total.toFixed(2)}</td>
+        </tr>
+      `;
 
-      calcularSubtotal();
+      document.getElementById("tablaBody").innerHTML += fila;
+
+      calcularTotales();
     }
 
-    function calcularSubtotal() {
-      var total1 = parseFloat(document.getElementById("total1").textContent);
-      var total2 = parseFloat(document.getElementById("total2").textContent);
+    function calcularTotales() {
+      var filas = document.querySelectorAll("#tablaBody tr");
+      var subtotal = 0;
 
-      var subtotal = total1 + total2;
+      filas.forEach(function(fila) {
+        subtotal += parseFloat(fila.querySelector("td:nth-child(4)").textContent);
+      });
+
       var igv = subtotal * 0.18;
       var total = subtotal + igv;
 
