@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php'; // Asegúrate de incluir la ruta correcta al archivo autoload de DOMPDF
+require 'dompdf/autoload.inc.php'; // Asegúrate de incluir la ruta correcta al archivo autoload de DOMPDF
 
 use Dompdf\Dompdf;
 
