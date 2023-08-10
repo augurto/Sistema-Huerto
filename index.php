@@ -7,7 +7,7 @@
   <title>Calculadora de Precios</title>
 </head>
 <body>
-  <div class="container mt-5">
+  <div class="container mt-5"> 
     <h2>Calculadora de Precios</h2>
     
     <div class="mb-3">
