@@ -141,31 +141,62 @@
   </script>
   <script>
     function descargarPDF() {
-      var filas = document.querySelectorAll("#tablaBody tr");
-      var tablaData = [];
+    var filas = document.querySelectorAll("#tablaBody tr");
+    var tablaData = [];
 
-      filas.forEach(function(fila) {
+    filas.forEach(function(fila) {
         var descripcion = fila.querySelector("td:nth-child(1)").textContent;
         var unidades = parseInt(fila.querySelector("td:nth-child(2)").textContent);
         var precio = parseFloat(fila.querySelector("td:nth-child(3)").textContent);
         var total = parseFloat(fila.querySelector("td:nth-child(4)").textContent);
 
         tablaData.push({ descripcion, unidades, precio, total });
-      });
+    });
 
-      $.ajax({
+    console.log(tablaData); // Agrega esta línea para depurar
+
+    $.ajax({
         type: "POST",
         url: "descargar_pdf.php",
         data: { tablaData: JSON.stringify(tablaData) },
         success: function(response) {
-          // Redirigir a la página de descarga del PDF
-          window.location.href = 'descargar_pdf.php';
+        // Redirigir a la página de descarga del PDF
+        window.location.href = 'descargar_pdf.php';
         },
         error: function(error) {
-          console.error(error);
+        console.error(error);
         }
-      });
+    });
     }
-  </script>
+    </script>
+                                                                                                                                                                                                                                                                                                                                                                                       var filas = document.querySelectorAll("#tablaBody tr");
+                                                                                                                                                                                                                                                                                                                                                                                                        var tablaData = [];
+
+                                                                                                                                                                                                                                                                                                                                                                                                        filas.forEach(function(fila) {
+                                                                                                                                                                                                                                                                                                                                                                                                            var descripcion = fila.querySelector("td:nth-child(1)").textContent;
+                                                                                                                                                                                                                                                                                                                                                                                                            var unidades = parseInt(fila.querySelector("td:nth-child(2)").textContent);
+                                                                                                                                                                                                                                                                                                                                                                                                            var precio = parseFloat(fila.querySelector("td:nth-child(3)").textContent);
+                                                                                                                                                                                                                                                                                                                                                                                                            var total = parseFloat(fila.querySelector("td:nth-child(4)").textContent);
+
+                                                                                                                                                                                                                                                                                                                                                                                                            tablaData.push({ descripcion, unidades, precio, total });
+                                                                                                                                                                                                                                                                                                                                                                                                        });
+
+                                                                                                                                                                                                                                                                                                                                                                                                        console.log(tablaData); // Agrega esta línea para depurar
+
+                                                                                                                                                                                                                                                                                                                                                                                                        $.ajax({
+                                                                                                                                                                                                                                                                                                                                                                                                            type: "POST",
+                                                                                                                                                                                                                                                                                                                                                                                                            url: "descargar_pdf.php",
+                                                                                                                                                                                                                                                                                                                                                                                                            data: { tablaData: JSON.stringify(tablaData) },
+                                                                                                                                                                                                                                                                                                                                                                                                            success: function(response) {
+                                                                                                                                                                                                                                                                                                                                                                                                            // Redirigir a la página de descarga del PDF
+                                                                                                                                                                                                                                                                                                                                                                                                            window.location.href = 'descargar_pdf.php';
+                                                                                                                                                                                                                                                                                                                                                                                                            },
+                                                                                                                                                                                                                                                                                                                                                                                                            error: function(error) {
+                                                                                                                                                                                                                                                                                                                                                                                                            console.error(error);
+                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                        });
+                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                        </script>
+
 </body>
 </html>
