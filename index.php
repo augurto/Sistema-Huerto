@@ -26,42 +26,44 @@
    
     <button class="btn btn-success" onclick="imprimirTabla()">Imprimir</button>
 
-    <table class="table table-bordered mt-4">
-      <thead>
-        <tr>
-          <th>Descripción</th>
-          <th>Unidades</th>
-          <th>Precio por Unidad</th>
-          <th>Total</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="tablaBody">
-        <!-- Las filas se agregarán aquí mediante JavaScript -->
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="3" class="text-right">Subtotal</td>
-          <td><span id="subtotal">0</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td colspan="3" class="text-right">IGV (18%)</td>
-          <td><span id="igv">0</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td colspan="3" class="text-right">Total</td>
-          <td><span id="total">0</span></td>
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+    
   </div>
   
-  <form id="imprimirForm" method="post" action="imprimir.php" target="_blank" style="display: none;">
-    <input type="hidden" id="tablaDataInput" name="tablaData">
-  </form>
+        <form id="imprimirForm" method="post" action="imprimir.php" target="_blank" style="display: none;">
+        <input type="hidden" id="tablaDataInput" name="tablaData">
+        
+        <table class="table table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Unidades</th>
+                <th>Precio por Unidad</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody id="tablaBody">
+            <!-- Las filas se agregarán aquí mediante JavaScript -->
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Subtotal</td>
+                <td><span id="subtotal">0</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">IGV (18%)</td>
+                <td><span id="igv">0</span></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">Total</td>
+                <td><span id="total">0</span></td>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+        </form>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
