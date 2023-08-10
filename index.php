@@ -23,6 +23,8 @@
       <input type="number" class="form-control" id="precio">
     </div>
     <button class="btn btn-primary" onclick="agregarFila()">Agregar</button>
+   
+    <button class="btn btn-success" onclick="imprimirTabla()">Imprimir</button>
 
     <table class="table table-bordered mt-4">
       <thead>
@@ -110,6 +112,37 @@
       document.getElementById("igv").textContent = igv.toFixed(2);
       document.getElementById("total").textContent = total.toFixed(2);
     }
+
+    function imprimirTabla() {
+    // Obtener las filas de la tabla
+    var filas = document.querySelectorAll("#tablaBody tr");
+    
+    // Crear un arreglo para almacenar los datos de la tabla
+    var tablaData = [];
+    
+    filas.forEach(function(fila) {
+      var descripcion = fila.querySelector("td:nth-child(1)").textContent;
+      var unidades = parseInt(fila.querySelector("td:nth-child(2)").textContent);
+      var precio = parseFloat(fila.querySelector("td:nth-child(3)").textContent);
+      var total = parseFloat(fila.querySelector("td:nth-child(4)").textContent);
+
+      tablaData.push({ descripcion, unidades, precio, total });
+    });
+
+    // Enviar los datos por AJAX a imprimir.php
+    $.ajax({
+      type: "POST",
+      url: "imprimir.php",
+      data: { tablaData: JSON.stringify(tablaData) },
+      success: function(response) {
+        console.log(response);
+        // Aquí podrías mostrar una notificación o redireccionar
+      },
+      error: function(error) {
+        console.error(error);
+      }
+    });
+  }
   </script>
 </body>
 </html>
