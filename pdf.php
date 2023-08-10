@@ -7,7 +7,7 @@
   <title>Calculadora de Precios</title>
 </head>
 <body>
-  <div class="container mt-5">
+  <div class="container mt-5"> 
     <h2>Calculadora de Precios</h2>
     
     <div class="mb-3">
@@ -31,7 +31,6 @@
           <th>Unidades</th>
           <th>Precio por Unidad</th>
           <th>Total</th>
-          <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="tablaBody">
@@ -41,17 +40,14 @@
         <tr>
           <td colspan="3" class="text-right">Subtotal</td>
           <td><span id="subtotal">0</span></td>
-          <td></td>
         </tr>
         <tr>
           <td colspan="3" class="text-right">IGV (18%)</td>
           <td><span id="igv">0</span></td>
-          <td></td>
         </tr>
         <tr>
           <td colspan="3" class="text-right">Total</td>
           <td><span id="total">0</span></td>
-          <td></td>
         </tr>
       </tfoot>
     </table>
@@ -73,26 +69,12 @@
           <td>${unidades}</td>
           <td>${precio.toFixed(2)}</td>
           <td>${total.toFixed(2)}</td>
-          <td><button class="btn btn-danger btn-sm" onclick="eliminarFila(this)">Eliminar</button></td>
         </tr>
       `;
 
       document.getElementById("tablaBody").innerHTML += fila;
 
       calcularTotales();
-      limpiarInputs();
-    }
-
-    function eliminarFila(button) {
-      var fila = button.parentNode.parentNode;
-      fila.parentNode.removeChild(fila);
-      calcularTotales();
-    }
-
-    function limpiarInputs() {
-      document.getElementById("descripcion").value = "";
-      document.getElementById("unidades").value = "";
-      document.getElementById("precio").value = "";
     }
 
     function calcularTotales() {
